@@ -2,12 +2,15 @@ name: Build and Deploy
 
 on:
   workflow_dispatch:
+    environment:
+      inputs:
+        description: 'Environment to run against'
+        type: environment
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: production
     steps:
       - name: Checkout
         uses: actions/checkout@v3
