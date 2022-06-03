@@ -2,8 +2,8 @@ name: Build and Deploy
 
 on:
   workflow_dispatch:
-    environment:
-      inputs:
+    inputs:
+      environment:
         description: 'Environment to run against'
         type: environment
         required: true
