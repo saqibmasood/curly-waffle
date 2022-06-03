@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: groupdocs-cloud/products.groupdocs.cloud
+          ref: convert
           token: ${{ secrets.PAT }}
 
       - name: Setup Node.js
