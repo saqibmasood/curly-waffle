@@ -4,6 +4,6 @@ on:
 
 jobs:
   deploy:
-    uses: .github/workflows/hugo.yml@main
+    uses: ./.github/workflows/hugo.yml@main
     with:
       environment: production
