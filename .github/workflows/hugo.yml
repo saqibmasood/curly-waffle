@@ -13,15 +13,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
     env:
-      HUGO_ENVIRONMENT: ${{ inputs.environment }}
-
+      HUGO_ENVIRONMENT: ${{ github.event.inputs.environment }}
     steps:
       - name: Testing
         run: |
-          echo Inputs ${{ inputs }}
-          echo Inputs ${{ inputs.string1 }}
-          echo Environment ${{ inputs.environment }}
+          echo Inputs ${{ github.event.inputs }}
+          echo Inputs ${{ github.event.inputs.string1 }}
+          echo Environment ${{ github.event.inputs.environment }}
           env
 
       - name: Checkout
