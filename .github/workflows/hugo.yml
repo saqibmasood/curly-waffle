@@ -33,9 +33,4 @@ jobs:
           npm run generate
 
       - name: Build using Hugo (staging)
-        if: ${{ jobs.build.environment }} == 'staging'
-        run: hugo --config=config-stage.toml --environment ${{ jobs.build.environment }}
-
-      - name: Build using Hugo (production)
-        if: ${{ jobs.build.environment }} == 'production'
-        run: hugo --config=config-prod.toml --environment ${{ jobs.build.environment }}
+        run: hugo --config=config-stage.toml --environment ${{ inputs.environment }}
