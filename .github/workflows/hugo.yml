@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ inputs.environment }}
+      name: development
     env:
       HUGO_ENVIRONMENT: ${{ inputs.environment }}
     steps:
