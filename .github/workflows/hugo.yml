@@ -1,9 +1,12 @@
 name: Build and Deploy
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       environment:
+        type: environment
+        required: true
+      string1:
         type: string
         required: true
 
@@ -16,6 +19,8 @@ jobs:
     steps:
       - name: Testing
         run: |
+          echo Inputs ${{ inputs }}
+          echo Inputs ${{ inputs.string1 }}
           echo Environment ${{ inputs.environment }}
           env
 
