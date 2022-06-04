@@ -1,10 +1,10 @@
 name: Build and Deploy
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       environment:
-        type: environment
+        type: string
         required: true
 
 jobs:
