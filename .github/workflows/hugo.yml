@@ -52,6 +52,13 @@ jobs:
           replace: ${{ secrets.AWS_S3_BUCKET_NAME }}
           include: "config-stage.toml"
 
-      - name: Set bucket
+      - name: Set region for deployment
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "us-west-2"
+          replace: ${{ secrets.AWS_DEFAULT_REGION }}
+          include: "config-stage.toml"
+
+      - name: Deploy
         run: hugo deploy --config=config-stage.toml
 
