@@ -1,0 +1,9 @@
+name: Deploy (production)
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: .github/workflows/hugo.yml@main
+    with:
+      environment: production
