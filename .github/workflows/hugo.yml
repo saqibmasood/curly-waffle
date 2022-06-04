@@ -11,9 +11,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment:
+      name: production
     env:
-      HUGO_ENVIRONMENT: production
+      HUGO_ENVIRONMENT: ${{ inputs.environment }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
