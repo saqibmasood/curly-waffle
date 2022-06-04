@@ -14,6 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
+      - name: Testing
+        run: |
+          echo Environment ${{ inputs.environment }}
+          env
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
