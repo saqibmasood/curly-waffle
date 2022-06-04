@@ -4,10 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       environment:
+        description: 'Build environment'
         type: environment
         required: true
-      string1:
+      branch:
+        description: 'Branch to checkout'
         type: string
+        default: master
         required: true
 
 jobs:
@@ -17,18 +20,12 @@ jobs:
     env:
       HUGO_ENVIRONMENT: ${{ github.event.inputs.environment }}
     steps:
-      - name: Testing
-        run: |
-          echo Inputs ${{ github.event.inputs }}
-          echo Inputs ${{ github.event.inputs.string1 }}
-          echo Environment ${{ github.event.inputs.environment }}
-          env
 
       - name: Checkout
         uses: actions/checkout@v3
         with:
           repository: groupdocs-cloud/products.groupdocs.cloud
-          ref: convert
+          ref: ${{ github.event.inputs.branch }}
           token: ${{ secrets.PAT }}
 
       - name: Setup Node.js
@@ -47,3 +44,14 @@ jobs:
 
       - name: Build
         run: hugo --config=config-stage.toml
+
+      - name: Set bucket for deployment
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "products-qa.groupdocs.cloud"
+          replace: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          include: "config-stage.toml"
+
+      - name: Set bucket
+        run: hugo deploy --config=config-stage.toml
+
