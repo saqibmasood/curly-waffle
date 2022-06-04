@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      wenv:
         description: 'Environment to run against'
         type: environment
         required: true
@@ -12,11 +12,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ${{ inputs.wenv }}
     steps:
       - name: Testing
         run: |
-          echo Environment ${{ inputs.environment }}
+          echo Environment ${{ inputs.wenv }}
           env
 
       - name: Checkout
