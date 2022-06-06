@@ -78,12 +78,12 @@ jobs:
         run: |
           npm run sitemaps
           cp public/sitemaps/index.xml public/sitemaps.xml
+          cp public/sitemaps/index.xml public/sitemap.xml
 
       - name: Deploy (staging)
         if: ${{ github.event.inputs.environment != 'production' }}
-        run: hugo deploy --config=config-stage.toml --target=Home
+        run: hugo deploy --config=config-stage.toml --target=Home --invalidateCDN=false
 
       - name: Deploy (production)
         if: ${{ github.event.inputs.environment == 'production' }}
-        run: hugo deploy --config=config-prod.toml --target=Home
-
+        run: hugo deploy --config=config-prod.toml --target=Home --invalidateCDN=false
