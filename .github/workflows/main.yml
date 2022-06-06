@@ -1,4 +1,4 @@
-name: Hugo
+name: Build and Deploy
 
 on:
   workflow_dispatch:
