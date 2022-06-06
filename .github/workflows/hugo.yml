@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     env:
+      NODE_ENV: ${{ github.event.inputs.environment }}
       HUGO_ENVIRONMENT: ${{ github.event.inputs.environment }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -45,7 +46,7 @@ jobs:
       - name: Process markdown
         run: npm run generate
 
-      - name: Build (staging)
+      - name: Build (${{ github.event.inputs.environment }})
         if: ${{ github.event.inputs.environment != 'production' }}
         run: hugo --config=config-stage.toml
 
@@ -80,7 +81,7 @@ jobs:
           cp public/sitemaps/index.xml public/sitemaps.xml
           cp public/sitemaps/index.xml public/sitemap.xml
 
-      - name: Deploy (staging)
+      - name: Deploy (${{ github.event.inputs.environment }})
         if: ${{ github.event.inputs.environment != 'production' }}
         run: hugo deploy --config=config-stage.toml --target=Home --invalidateCDN=false
 
