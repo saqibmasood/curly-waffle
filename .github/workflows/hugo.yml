@@ -6,6 +6,7 @@ on:
       environment:
         description: 'Build environment'
         type: environment
+        default: staging
         required: true
       branch:
         description: 'Branch to checkout'
