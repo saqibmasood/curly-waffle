@@ -75,7 +75,9 @@ jobs:
           include: "config-*.toml"
 
       - name: Process sitemaps
-        run: npm run sitemaps
+        run: |
+          npm run sitemaps
+          cp public/sitemaps/index.xml public/sitemaps.xml
 
       - name: Deploy (staging)
         if: ${{ github.event.inputs.environment != 'production' }}
