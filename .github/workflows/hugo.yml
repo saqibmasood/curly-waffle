@@ -84,8 +84,8 @@ jobs:
 
       - name: Deploy (${{ github.event.inputs.environment }})
         if: ${{ github.event.inputs.environment != 'production' }}
-        run: hugo deploy --config=config-stage.toml --target=Home --invalidateCDN=false
+        run: hugo deploy --config=config-stage.toml --target=Home --maxDeletes=-1 --invalidateCDN=false
 
       - name: Deploy (production)
         if: ${{ github.event.inputs.environment == 'production' }}
-        run: hugo deploy --config=config-prod.toml --target=Home --invalidateCDN=false
+        run: hugo deploy --config=config-prod.toml --target=Home --maxDeletes=-1 --invalidateCDN=false
