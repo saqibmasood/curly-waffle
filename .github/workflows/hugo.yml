@@ -45,23 +45,40 @@ jobs:
       - name: Process markdown
         run: npm run generate
 
-      - name: Build
+      - name: Build (staging)
+        if: ${{ github.event.inputs.environment != "production" }}
         run: hugo --config=config-stage.toml
 
-      - name: Set bucket for deployment
+      - name: Build (production)
+        if: ${{ github.event.inputs.environment == "production" }}
+        run: hugo --config=config-prod.toml
+
+      - name: Set bucket for deployment (staging)
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "products-qa.groupdocs.cloud"
           replace: ${{ secrets.AWS_S3_BUCKET_NAME }}
           include: "config-stage.toml"
 
+      - name: Set bucket for deployment (production)
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "products.groupdocs.cloud"
+          replace: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          include: "config-prod.toml"
+
       - name: Set region for deployment
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "us-west-2"
           replace: ${{ secrets.AWS_DEFAULT_REGION }}
-          include: "config-stage.toml"
+          include: "config-*.toml"
 
-      - name: Deploy
-        run: hugo deploy --config=config-stage.toml
+      - name: Deploy (staging)
+        if: ${{ github.event.inputs.environment != "production" }}
+        run: hugo deploy --config=config-stage.toml --target=Home
+
+      - name: Deploy (production)
+        if: ${{ github.event.inputs.environment == "production" }}
+        run: hugo deploy --config=config-prod.toml --target=Home
 
