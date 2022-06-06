@@ -46,11 +46,11 @@ jobs:
         run: npm run generate
 
       - name: Build (staging)
-        if: ${{ github.event.inputs.environment != "production" }}
+        if: ${{ github.event.inputs.environment != 'production' }}
         run: hugo --config=config-stage.toml
 
       - name: Build (production)
-        if: ${{ github.event.inputs.environment == "production" }}
+        if: ${{ github.event.inputs.environment == 'production' }}
         run: hugo --config=config-prod.toml
 
       - name: Set bucket for deployment (staging)
@@ -74,11 +74,14 @@ jobs:
           replace: ${{ secrets.AWS_DEFAULT_REGION }}
           include: "config-*.toml"
 
+      - name: Process sitemaps
+        run: npm run sitemaps
+
       - name: Deploy (staging)
-        if: ${{ github.event.inputs.environment != "production" }}
+        if: ${{ github.event.inputs.environment != 'production' }}
         run: hugo deploy --config=config-stage.toml --target=Home
 
       - name: Deploy (production)
-        if: ${{ github.event.inputs.environment == "production" }}
+        if: ${{ github.event.inputs.environment == 'production' }}
         run: hugo deploy --config=config-prod.toml --target=Home
 
