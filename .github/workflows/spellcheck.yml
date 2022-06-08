@@ -1,0 +1,28 @@
+name: Hugo
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to checkout'
+        type: string
+        default: master
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: development
+    env:
+      NODE_ENV: development
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: groupdocs-cloud/products.groupdocs.cloud
+          ref: ${{ github.event.inputs.branch }}
+          token: ${{ secrets.PAT }}
+
+      - name: Setup cspell
+        uses: streetsidesoftware/cspell-action@v2
